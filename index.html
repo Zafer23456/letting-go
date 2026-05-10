@@ -1,0 +1,3009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Letting Go — A Path Forward</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f7f3ec;
+    --warm-white: #faf8f4;
+    --text-dark: #2a2520;
+    --text-mid: #5c5650;
+    --text-light: #9a9490;
+    --accent: #8b7355;
+    --border: rgba(139,115,85,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; background: #f7f3ec; }
+  body { background: #f7f3ec; }
+
+  /* ========== MASK SITE ========== */
+  #mask-site {
+    background: var(--cream);
+    min-height: 100vh;
+    font-family: 'Jost', sans-serif;
+    color: var(--text-dark);
+  }
+
+  /* Sub-pages hidden by default */
+  .mask-page { display: none; }
+  .mask-page.active { display: block; }
+
+  #page-home { position: relative; }
+
+  /* Nav */
+  .mask-nav {
+    padding: 1.8rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: rgba(247,243,236,0.92);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+  }
+  .mask-nav .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--text-dark);
+    cursor: pointer;
+  }
+  .mask-nav .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  .mask-nav .nav-links a {
+    font-size: 0.8rem;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-mid);
+    text-decoration: none;
+    transition: color 0.3s;
+    cursor: pointer;
+  }
+  .mask-nav .nav-links a:hover,
+  .mask-nav .nav-links a.active-link { color: var(--text-dark); }
+
+  /* ===== HOME PAGE ===== */
+
+  /* Background orbs */
+  .home-orbs {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(235,228,215,0.9) 0%, rgba(235,228,215,0) 70%);
+  }
+  .orb-1 { width: 600px; height: 600px; top: -180px; left: -160px; }
+  .orb-2 { width: 480px; height: 480px; top: 20%; right: -120px; }
+  .orb-3 { width: 360px; height: 360px; bottom: -80px; left: 30%; }
+  .orb-4 { width: 260px; height: 260px; top: 55%; left: 10%; opacity: 0.6; }
+  .orb-5 { width: 320px; height: 320px; top: 10%; left: 45%; opacity: 0.5; }
+
+  /* Hero */
+  .mask-hero {
+    padding: 9rem 4rem 7rem;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  .mask-hero .eyebrow {
+    font-size: 0.72rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 1.8rem;
+  }
+  .mask-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 6vw, 5.2rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--text-dark);
+    margin-bottom: 2rem;
+    letter-spacing: -0.01em;
+  }
+  .mask-hero h1 em { font-style: italic; color: var(--accent); }
+  .mask-hero .subtext {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--text-mid);
+    max-width: 560px;
+    margin: 0 auto 3rem;
+  }
+  .hero-cta {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border-bottom: 1px solid rgba(139,115,85,0.35);
+    padding-bottom: 0.2rem;
+    cursor: pointer;
+    transition: border-color 0.3s, color 0.3s;
+    text-decoration: none;
+  }
+  .hero-cta:hover { border-color: var(--accent); color: var(--text-dark); }
+
+  /* Divider line with label */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0 4rem;
+    margin: 1rem 0;
+  }
+  .section-divider::before, .section-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+  .section-divider span {
+    font-size: 0.65rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    white-space: nowrap;
+  }
+
+  /* Quote block */
+  .mask-quote-section {
+    background: var(--warm-white);
+    padding: 5rem 4rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    z-index: 1;
+  }
+  .mask-quote-section blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.7;
+    color: var(--text-dark);
+    max-width: 680px;
+    margin: 0 auto 1.5rem;
+  }
+  .mask-quote-section .attribution {
+    font-size: 0.78rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-light);
+  }
+
+  /* Hidden portal — "wound" word trigger */
+  .hidden-portal-word {
+    position: relative;
+    display: inline;
+    cursor: pointer;
+    color: inherit;
+    text-decoration: none;
+    font-style: italic;
+    animation: wound-glitch 4.2s ease-in-out infinite;
+  }
+  @keyframes wound-glitch {
+    0%, 15%, 100% {
+      text-shadow: none;
+      letter-spacing: inherit;
+      opacity: 1;
+    }
+    /* first beat */
+    4% {
+      text-shadow: 1px 0 rgba(139,115,85,0.26), -1px 0 rgba(100,80,60,0.15);
+      letter-spacing: 0.014em;
+      opacity: 0.93;
+    }
+    6% {
+      text-shadow: none;
+      letter-spacing: inherit;
+      opacity: 1;
+    }
+    /* second beat — softer */
+    8% {
+      text-shadow: 1px 0 rgba(139,115,85,0.18), -1px 0 rgba(100,80,60,0.1);
+      letter-spacing: 0.009em;
+      opacity: 0.96;
+    }
+    10% {
+      text-shadow: none;
+      letter-spacing: inherit;
+      opacity: 1;
+    }
+  }
+
+  /* Cards section */
+  .mask-cards {
+    padding: 6rem 4rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .mask-cards .section-label {
+    font-size: 0.72rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .mask-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .mask-card:hover { border-color: rgba(139,115,85,0.3); transform: translateY(-3px); }
+  .mask-card .roman {
+    position: absolute;
+    bottom: -0.1em; right: 0.15em;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 7rem;
+    font-weight: 300;
+    color: rgba(139,115,85,0.055);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.04em;
+  }
+  .mask-card .card-num {
+    font-size: 0.68rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 1.2rem;
+  }
+  .mask-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.55rem;
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+  }
+  .mask-card p {
+    font-size: 0.88rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--text-mid);
+  }
+
+  /* Testimonial strip */
+  .mask-testimonials {
+    background: var(--warm-white);
+    border-top: 1px solid var(--border);
+    padding: 5rem 4rem;
+    position: relative;
+    z-index: 1;
+  }
+  .testimonials-label {
+    font-size: 0.68rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .testimonial-item blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.8;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+  }
+  .testimonial-item .t-attr {
+    font-size: 0.7rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-light);
+  }
+
+  /* Footer */
+  .mask-footer {
+    padding: 3rem 4rem;
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+  .mask-footer p {
+    font-size: 0.72rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: var(--text-light);
+  }
+  .mask-footer .footer-links {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+  }
+  .mask-footer .footer-links a {
+    font-size: 0.7rem;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  .mask-footer .footer-links a:hover { color: var(--text-mid); }
+  .mask-footer .footer-right { text-align: right; }
+
+  /* ===== SUB-PAGES SHARED ===== */
+  .subpage-hero {
+    padding: 7rem 4rem 5rem;
+    max-width: 820px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  .subpage-hero .eyebrow {
+    font-size: 0.68rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+  }
+  .subpage-hero h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--text-dark);
+    margin-bottom: 1.5rem;
+  }
+  .subpage-hero h2 em { font-style: italic; color: var(--accent); }
+  .subpage-hero p {
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.95;
+    color: var(--text-mid);
+    max-width: 540px;
+    margin: 0 auto;
+  }
+  .subpage-body {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 3rem 4rem 7rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Accordion / practice items */
+  .practice-list { border-top: 1px solid var(--border); }
+  .practice-item {
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 0;
+  }
+  .practice-item .p-num {
+    font-size: 0.65rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 0.6rem;
+  }
+  .practice-item h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--text-dark);
+    margin-bottom: 0.8rem;
+  }
+  .practice-item p {
+    font-size: 0.88rem;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--text-mid);
+  }
+
+  /* Pull quote */
+  .pull-quote {
+    border-left: 2px solid rgba(139,115,85,0.2);
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--text-mid);
+    line-height: 1.75;
+  }
+
+  /* Contact form */
+  .contact-form { display: flex; flex-direction: column; gap: 1.5rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .form-field { display: flex; flex-direction: column; gap: 0.5rem; }
+  .form-field label {
+    font-size: 0.7rem;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-light);
+  }
+  .form-field input, .form-field textarea, .form-field select {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    padding: 0.6rem 0;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--text-dark);
+    outline: none;
+    transition: border-color 0.3s;
+    width: 100%;
+  }
+  .form-field input:focus, .form-field textarea:focus, .form-field select:focus {
+    border-color: var(--accent);
+  }
+  .form-field textarea { resize: none; height: 100px; }
+  .form-field select { cursor: pointer; }
+  .form-submit {
+    align-self: flex-start;
+    background: none;
+    border: 1px solid rgba(139,115,85,0.3);
+    color: var(--accent);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.9rem 2.5rem;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s, border-color 0.3s;
+    margin-top: 0.5rem;
+  }
+  .form-submit:hover {
+    background: var(--accent);
+    color: var(--warm-white);
+    border-color: var(--accent);
+  }
+  .contact-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 4rem;
+    padding-bottom: 4rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .contact-info-item .ci-label {
+    font-size: 0.65rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  .contact-info-item .ci-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--text-dark);
+  }
+
+  /* ========== ARG SITE ========== */
+  #arg-site {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #000;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 1000;
+  }
+
+  #arg-content {
+    min-height: 100vh;
+    background: #000;
+    color: #c8c0b0;
+    font-family: 'Courier New', monospace;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+
+  /* Static noise canvas — sits behind content */
+  #static-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.045;
+  }
+
+  /* Scan lines overlay */
+  #arg-content::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.11) 2px,
+      rgba(0,0,0,0.11) 4px
+    );
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  /* Horizontal glitch tear — occasional */
+  #glitch-tear {
+    position: fixed;
+    left: 0; width: 100%;
+    height: 3px;
+    background: rgba(200,180,160,0.06);
+    pointer-events: none;
+    z-index: 6;
+    display: none;
+  }
+
+  .arg-inner {
+    padding: 3rem 2rem;
+    max-width: 900px;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Glitch title */
+  .arg-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    color: #e8e0d0;
+    margin-bottom: 0.3rem;
+    position: relative;
+    display: inline-block;
+    letter-spacing: -0.02em;
+    transform: rotate(-3.5deg) translateX(2.5rem) translateY(0.8rem);
+    animation: glitch-title 8s infinite, title-flicker 5s infinite;
+  }
+  @keyframes glitch-title {
+    0%, 90%, 100% { transform: rotate(-3.5deg) translateX(2.5rem) translateY(0.8rem); text-shadow: none; }
+    91% { transform: rotate(-3.5deg) translateX(calc(2.5rem - 3px)) translateY(calc(0.8rem + 1px)); text-shadow: 2px 0 #ff0040, -2px 0 #00ffaa; }
+    92% { transform: rotate(-3.5deg) translateX(calc(2.5rem + 3px)) translateY(calc(0.8rem - 1px)); text-shadow: -2px 0 #ff0040, 2px 0 #00ffaa; }
+    93% { transform: rotate(-3.5deg) translateX(calc(2.5rem - 1px)) translateY(calc(0.8rem + 2px)); text-shadow: 1px 0 #ff0040; }
+    94% { transform: rotate(-3.5deg) translateX(2.5rem) translateY(0.8rem); text-shadow: none; }
+    95% { transform: rotate(-3.5deg) translateX(calc(2.5rem + 4px)) translateY(calc(0.8rem - 2px)); text-shadow: -3px 0 #00ffaa; }
+    96% { transform: rotate(-3.5deg) translateX(2.5rem) translateY(0.8rem); text-shadow: none; }
+  }
+  @keyframes title-flicker {
+    0%, 88%, 100% { opacity: 1; }
+    89%  { opacity: 0.08; }
+    90%  { opacity: 0.95; }
+    91%  { opacity: 0.12; }
+    92%  { opacity: 1; }
+    94%  { opacity: 0.85; }
+    95%  { opacity: 0.0; }
+    96%  { opacity: 1; }
+  }
+
+  .arg-subtitle {
+    font-size: 0.7rem;
+    color: #554e44;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+    font-family: 'Courier New', monospace;
+  }
+
+  /* Scattered text blocks */
+  .scatter-block {
+    position: relative;
+    margin: 1.5rem 0;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: #a09880;
+  }
+  .scatter-block.offset-right { margin-left: 15%; }
+  .scatter-block.offset-far-right { margin-left: 35%; }
+  .scatter-block.offset-extreme { margin-left: 55%; }
+  .scatter-block.offset-left { margin-left: -1%; }
+  .scatter-block.tilt-pos { transform: rotate(0.7deg); }
+  .scatter-block.tilt-neg { transform: rotate(-1.2deg); }
+  .scatter-block.tilt-big { transform: rotate(2.1deg); }
+  .scatter-block.tilt-huge { transform: rotate(-4.5deg); }
+  .scatter-block.tilt-wild { transform: rotate(6.2deg); }
+  .scatter-block.big-text { font-size: 1.3rem; color: #d0c8b8; }
+  .scatter-block.huge-text { font-size: 2.1rem; color: #e0d8c8; line-height: 1; }
+  .scatter-block.tiny-text { font-size: 0.62rem; color: #605850; opacity: 0.7; }
+  .scatter-block.micro-text { font-size: 0.42rem; color: #352e28; opacity: 0.5; letter-spacing: 0.05em; }
+  .scatter-block.broken { letter-spacing: 0.3em; word-spacing: 0.5em; }
+  .scatter-block.very-broken { letter-spacing: 0.6em; word-spacing: 1.2em; opacity: 0.6; }
+  .scatter-block.ghost { opacity: 0.18; }
+  .scatter-block.ghost-red { color: #5a0808; opacity: 0.35; }
+  .scatter-block.dim { opacity: 0.3; }
+
+  /* Floating absolutely-positioned chaos elements */
+  .float-chaos {
+    position: absolute;
+    font-family: 'Courier New', monospace;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* Jitter animations */
+  @keyframes jitter-a {
+    0%,100% { transform: translate(0,0) rotate(0deg); }
+    20% { transform: translate(-2px,1px) rotate(0.3deg); }
+    40% { transform: translate(1px,-1px) rotate(-0.2deg); }
+    60% { transform: translate(-1px,2px) rotate(0.1deg); }
+    80% { transform: translate(2px,0px) rotate(-0.3deg); }
+  }
+  @keyframes jitter-b {
+    0%,100% { transform: translate(0,0); }
+    33% { transform: translate(3px,-2px); }
+    66% { transform: translate(-2px,3px); }
+  }
+  @keyframes stutter-opacity {
+    0%,89%,100% { opacity: 1; }
+    90% { opacity: 0.1; }
+    91% { opacity: 0.9; }
+    92% { opacity: 0.0; }
+    93% { opacity: 0.8; }
+    94% { opacity: 0.15; }
+    95% { opacity: 1; }
+  }
+  @keyframes stutter-opacity-slow {
+    0%,94%,100% { opacity: 1; }
+    95% { opacity: 0.05; }
+    96% { opacity: 0.7; }
+    97% { opacity: 0; }
+    98% { opacity: 0.6; }
+  }
+  @keyframes stutter-pos {
+    0%,90%,100% { transform: translateX(0) rotate(-1.2deg); }
+    91% { transform: translateX(-8px) rotate(-1.2deg); }
+    92% { transform: translateX(5px) rotate(-1.2deg); }
+    93% { transform: translateX(0) rotate(-1.2deg); }
+  }
+  @keyframes rgb-drift {
+    0%,85%,100% { text-shadow: none; }
+    86% { text-shadow: 3px 0 rgba(255,0,40,0.4), -3px 0 rgba(0,255,180,0.3); }
+    87% { text-shadow: -4px 0 rgba(255,0,40,0.3), 2px 0 rgba(0,255,180,0.4); }
+    88% { text-shadow: none; }
+    89% { text-shadow: 5px 0 rgba(255,0,40,0.2), -1px 0 rgba(0,255,180,0.5); }
+    90% { text-shadow: none; }
+  }
+  @keyframes blink-red {
+    0%,96%,100% { opacity: 0; }
+    97% { opacity: 1; color: #cc0000; }
+    98% { opacity: 0.3; }
+    99% { opacity: 0.8; color: #880000; }
+  }
+  @keyframes creep-right {
+    0% { transform: translateX(0) rotate(1.8deg); }
+    100% { transform: translateX(12px) rotate(1.8deg); }
+  }
+
+  /* Overlapping ghost text layer */
+  .ghost-layer {
+    position: absolute;
+    left: 0; top: 0;
+    width: 100%;
+    pointer-events: none;
+    user-select: none;
+    overflow: hidden;
+  }
+  .ghost-word {
+    position: absolute;
+    font-family: 'Courier New', monospace;
+    color: rgba(200,180,160,0.04);
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: bold;
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* Broken border box */
+  .broken-box {
+    border-top: 1px solid #1e1a16;
+    border-left: 1px solid #1e1a16;
+    padding: 1rem 1rem 1rem 1.5rem;
+    position: relative;
+    margin: 1rem 0;
+  }
+  .broken-box::after {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 20%;
+    width: 50%; height: 1px;
+    background: #1e1a16;
+  }
+
+  /* Redacted block */
+  .redacted {
+    background: #0f0d0a;
+    color: #0f0d0a;
+    user-select: none;
+    letter-spacing: -0.05em;
+    display: inline-block;
+    padding: 0 0.2em;
+    position: relative;
+  }
+  .redacted::after {
+    content: '█████████';
+    position: absolute;
+    left: 0; top: 0;
+    color: #1a1612;
+    font-size: 0.95em;
+    letter-spacing: -0.05em;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  /* Margin annotation */
+  .margin-note {
+    position: absolute;
+    right: -2rem;
+    font-size: 0.52rem;
+    color: #2a2218;
+    transform: rotate(90deg);
+    transform-origin: right center;
+    white-space: nowrap;
+    letter-spacing: 0.1em;
+    pointer-events: none;
+  }
+
+  /* Strikethrough corruption */
+  .struck { text-decoration: line-through; text-decoration-color: #3a3028; opacity: 0.5; }
+
+  /* Repeated echo text */
+  .echo-wrap { position: relative; display: inline-block; }
+  .echo-wrap::before {
+    content: attr(data-echo);
+    position: absolute;
+    left: 3px; top: 2px;
+    color: rgba(139,0,0,0.2);
+    pointer-events: none;
+  }
+  .echo-wrap::after {
+    content: attr(data-echo);
+    position: absolute;
+    left: -3px; top: -2px;
+    color: rgba(0,200,140,0.08);
+    pointer-events: none;
+  }
+  /* Corruption artifacts */
+  .artifact {
+    display: block;
+    font-size: 0.65rem;
+    color: #2a2620;
+    font-family: monospace;
+    overflow: hidden;
+    white-space: nowrap;
+    animation: flicker-artifact 12s infinite;
+    margin: 0.4rem 0;
+    letter-spacing: 0.05em;
+  }
+  @keyframes flicker-artifact {
+    0%, 94%, 100% { opacity: 0.3; }
+    95% { opacity: 0.8; color: #ff4444; }
+    96% { opacity: 0.1; }
+    97% { opacity: 0.9; }
+  }
+
+  /* Red accent text */
+  .red-text {
+    color: #8b0000;
+    animation: pulse-red 4s infinite;
+  }
+  @keyframes pulse-red {
+    0%, 100% { color: #8b0000; }
+    50% { color: #cc0000; }
+  }
+
+  /* Glitch line */
+  .glitch-line {
+    height: 2px;
+    background: #1a1614;
+    margin: 1.5rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .glitch-line::after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 30%;
+    background: #ff000033;
+    animation: scan-line 6s infinite linear;
+  }
+  @keyframes scan-line {
+    0% { left: -30%; }
+    100% { left: 130%; }
+  }
+
+  /* Code entry box */
+  #code-section {
+    margin: 4rem 0 2rem;
+    padding: 2.5rem 2.8rem 2.5rem 2.4rem;
+    background: #050403;
+    position: relative;
+  }
+  /* Inner faint border */
+  #code-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid #1e1c18;
+    pointer-events: none;
+  }
+  #code-hint {
+    font-size: 0.78rem;
+    color: #706860;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+  #code-input-wrap {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  /* Three-segment code input */
+  .code-seg-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: #000;
+    border: 1px solid #2a2620;
+    padding: 0.5rem 0.8rem;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    color: #c8c0b0;
+  }
+  .code-seg-wrap:focus-within { border-color: #4a4238; }
+  .code-seg {
+    background: transparent;
+    border: none;
+    color: #c8c0b0;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    outline: none;
+    letter-spacing: 0.1em;
+    text-align: center;
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+  .code-seg::-webkit-outer-spin-button,
+  .code-seg::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .code-seg-1 { width: 2.2em; }
+  .code-seg-2 { width: 2.2em; }
+  .code-seg-3 { width: 2.2em; }
+  .code-dash {
+    color: #4a4238;
+    padding: 0 0.15em;
+    user-select: none;
+  }
+  #code-submit {
+    background: #0a0806;
+    border: 1px solid #2a2620;
+    color: #706860;
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: none;
+  }
+  #code-submit:hover { background: #100e0a; border-color: #3a3530; color: #908880; }
+  #code-error {
+    font-size: 0.7rem;
+    color: #5a0000;
+    margin-top: 0.6rem;
+    display: none;
+    letter-spacing: 0.1em;
+  }
+
+  /* ========== TRANSITION SCREEN ========== */
+  #transition-screen {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #000;
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  /* static noise layer on transition */
+  #transition-screen::before {
+    content: '';
+    position: absolute;
+    top: -20%; left: -20%;
+    width: 140%; height: 140%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.07;
+    pointer-events: none;
+    animation: drift-noise 0.12s steps(1) infinite;
+  }
+  @keyframes drift-noise {
+    0%   { transform: translate(0,0); }
+    25%  { transform: translate(-4px, 3px); }
+    50%  { transform: translate(5px,-2px); }
+    75%  { transform: translate(-2px, 5px); }
+    100% { transform: translate(3px,-4px); }
+  }
+  /* horizontal RGB tear lines */
+  #transition-screen::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(255,0,40,0.015) 3px,
+      rgba(255,0,40,0.015) 4px
+    );
+  }
+  #transition-text {
+    font-family: 'Courier New', monospace;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    color: rgba(255,255,255,0.72);
+    letter-spacing: 0.05em;
+    min-height: 2em;
+    white-space: pre;
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 0 18px rgba(255,255,255,0.08);
+  }
+
+  /* ========== FILE PAGE ========== */
+  #file-page {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #000;
+    z-index: 9998;
+    overflow-y: auto;
+  }
+
+  /* Landing view — centred file icon */
+  #file-landing {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    cursor: pointer;
+  }
+  #file-landing:hover #file-icon { border-color: #504840; }
+  #file-landing:hover #file-icon-name { color: #907860; }
+  #file-icon {
+    width: 80px;
+    height: 96px;
+    border: 1px solid #2a2420;
+    background: #06040200;
+    position: relative;
+    margin-bottom: 1.2rem;
+    transition: border-color 0.2s;
+  }
+  /* folded corner */
+  #file-icon::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 22px; height: 22px;
+    background: #000;
+    border-left: 1px solid #2a2420;
+    border-bottom: 1px solid #2a2420;
+  }
+  /* triangle fold */
+  #file-icon::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    border-style: solid;
+    border-width: 22px 22px 0 0;
+    border-color: #1a1612 transparent transparent transparent;
+  }
+  #file-icon-lines {
+    position: absolute;
+    bottom: 18px;
+    left: 12px;
+    right: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  #file-icon-lines span {
+    display: block;
+    height: 1px;
+    background: #2a2420;
+  }
+  #file-icon-lines span:last-child { width: 55%; }
+  #file-icon-name {
+    font-family: 'Courier New', monospace;
+    font-size: 0.82rem;
+    color: #504438;
+    letter-spacing: 0.08em;
+    transition: color 0.2s;
+  }
+  #file-open-hint {
+    font-family: 'Courier New', monospace;
+    font-size: 0.58rem;
+    color: #252018;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 0.6rem;
+    animation: hint-pulse 2.5s ease-in-out infinite;
+  }
+  @keyframes hint-pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* Contents view — shown after click */
+  #file-inner {
+    min-height: 100vh;
+    padding: 3rem 2.5rem;
+    position: relative;
+    display: none;
+  }
+  /* Static noise overlay for file page */
+  #file-inner::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+  }
+  #file-header {
+    font-family: 'Courier New', monospace;
+    margin-bottom: 2.5rem;
+    position: relative;
+    z-index: 2;
+  }
+  #file-header .file-label {
+    font-size: 0.62rem;
+    color: #2a2520;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  #file-header .file-name {
+    font-size: 1.1rem;
+    color: #706050;
+    letter-spacing: 0.08em;
+  }
+  #file-header .file-divider {
+    height: 1px;
+    background: #1a1610;
+    margin-top: 1rem;
+  }
+  #file-content {
+    font-family: 'Courier New', monospace;
+    font-size: 0.88rem;
+    line-height: 2;
+    color: #b0a898;
+    white-space: pre-wrap;
+    position: relative;
+    z-index: 2;
+    min-height: 400px;
+  }
+
+  /* Line-by-line layout with arrowhead */
+  .file-line {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5em;
+    white-space: normal; /* allow wrap on mobile */
+  }
+  .file-arrow {
+    flex-shrink: 0;
+    color: #4a4038;
+    font-size: 0.9em;
+    opacity: 0.7;
+    line-height: inherit;
+    user-select: none;
+  }
+  .file-line-text {
+    flex: 1;
+  }
+  .file-cursor-inline {
+    display: inline-block;
+    width: 7px;
+    height: 0.9em;
+    background: #b0a898;
+    vertical-align: text-bottom;
+    flex-shrink: 0;
+    animation: blink 0.7s step-end infinite;
+  }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+  #search-msg {
+    display: none;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    color: #6b1a1a;
+    white-space: pre;
+    position: relative;
+    z-index: 2;
+    margin-top: 3rem;
+  }
+
+  /* ===== ENTRANCE ANIMATIONS ===== */
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* Nav slides in from top */
+  .mask-nav {
+    animation: fade-in 0.7s ease both;
+  }
+
+  /* Hero elements stagger up */
+  .mask-hero .eyebrow {
+    animation: fade-up 0.7s cubic-bezier(0.22,1,0.36,1) 0.15s both;
+  }
+  .mask-hero h1 {
+    animation: fade-up 0.85s cubic-bezier(0.22,1,0.36,1) 0.3s both;
+  }
+  .mask-hero .subtext {
+    animation: fade-up 0.8s cubic-bezier(0.22,1,0.36,1) 0.48s both;
+  }
+  .hero-cta {
+    animation: fade-up 0.75s cubic-bezier(0.22,1,0.36,1) 0.62s both;
+  }
+
+  /* Quote section fades in */
+  .mask-quote-section {
+    animation: fade-in 1s ease 0.75s both;
+  }
+
+  /* Cards stagger in */
+  .mask-cards .section-label {
+    animation: fade-up 0.7s cubic-bezier(0.22,1,0.36,1) 0.85s both;
+  }
+  .cards-grid .mask-card:nth-child(1) {
+    animation: fade-up 0.75s cubic-bezier(0.22,1,0.36,1) 0.95s both;
+  }
+  .cards-grid .mask-card:nth-child(2) {
+    animation: fade-up 0.75s cubic-bezier(0.22,1,0.36,1) 1.08s both;
+  }
+  .cards-grid .mask-card:nth-child(3) {
+    animation: fade-up 0.75s cubic-bezier(0.22,1,0.36,1) 1.2s both;
+  }
+
+  /* Testimonials fade in gently */
+  .mask-testimonials {
+    animation: fade-in 1s ease 1.3s both;
+  }
+
+  /* Only animate on home page load — sub-pages skip entrance */
+  .mask-page:not(.active) * {
+    animation: none !important;
+  }
+
+  /* Grain texture overlay on mask site */
+  #mask-site::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 200;
+    opacity: 0.022;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23g)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 260px 260px;
+  }
+
+  /* Refined nav — thinner, more air */
+  .mask-nav {
+    padding: 1.6rem 4rem;
+  }
+  .mask-nav .logo {
+    letter-spacing: 0.14em;
+  }
+  .mask-nav .nav-links a {
+    letter-spacing: 0.16em;
+    font-size: 0.74rem;
+    position: relative;
+    padding-bottom: 2px;
+  }
+  /* Underline slide-in on hover */
+  .mask-nav .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 1px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+  .mask-nav .nav-links a:hover::after,
+  .mask-nav .nav-links a.active-link::after { width: 100%; }
+
+  /* Hero — refined eyebrow with flanking lines */
+  .mask-hero .eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+  .mask-hero .eyebrow::before,
+  .mask-hero .eyebrow::after {
+    content: '';
+    display: block;
+    width: 32px; height: 1px;
+    background: rgba(154,148,144,0.4);
+  }
+
+  /* Slightly deeper hero gradient */
+  #page-home .mask-hero h1 {
+    background: linear-gradient(135deg, var(--text-dark) 0%, #4a4238 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  #page-home .mask-hero h1 em {
+    -webkit-text-fill-color: var(--accent);
+    background: none;
+  }
+
+  /* Quote section — warmer, slightly richer */
+  .mask-quote-section {
+    background: linear-gradient(180deg, var(--warm-white) 0%, #f2ede4 100%);
+  }
+  .mask-quote-section blockquote {
+    position: relative;
+    padding: 0 2rem;
+  }
+  /* Large decorative open-quote */
+  .mask-quote-section blockquote::before {
+    content: '\201C';
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem;
+    line-height: 1;
+    color: rgba(139,115,85,0.1);
+    position: absolute;
+    top: -1rem; left: -0.5rem;
+    pointer-events: none;
+  }
+
+  /* Cards — subtle left accent line on hover, refined shadow */
+  .mask-card {
+    transition: border-color 0.35s, transform 0.35s, box-shadow 0.35s;
+  }
+  .mask-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 10%; bottom: 10%;
+    width: 2px;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.35s;
+    border-radius: 0 2px 2px 0;
+  }
+  .mask-card:hover {
+    box-shadow: 0 8px 32px rgba(42,37,32,0.06);
+    transform: translateY(-4px);
+  }
+  .mask-card:hover::before { opacity: 0.4; }
+
+  /* Testimonials — open-quote mark per item */
+  .testimonial-item {
+    position: relative;
+    padding-top: 1.5rem;
+  }
+  .testimonial-item::before {
+    content: '\201C';
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    line-height: 1;
+    color: rgba(139,115,85,0.12);
+    position: absolute;
+    top: -0.3rem; left: -0.3rem;
+  }
+
+  /* Testimonials — separator dots between items on desktop */
+  @media (min-width: 769px) {
+    .testimonial-item + .testimonial-item {
+      border-left: 1px solid var(--border);
+      padding-left: 3rem;
+    }
+  }
+
+  /* Pull-quote — accent left bar, warmer tint */
+  .pull-quote {
+    background: linear-gradient(90deg, rgba(139,115,85,0.04) 0%, transparent 100%);
+    border-left: 2px solid rgba(139,115,85,0.3);
+    border-radius: 0 4px 4px 0;
+  }
+
+  /* Practice items — number badge */
+  .practice-item .p-num {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .practice-item .p-num::after {
+    content: '';
+    display: inline-block;
+    width: 20px; height: 1px;
+    background: var(--border);
+    vertical-align: middle;
+  }
+
+  /* Practice item h4 hover accent */
+  .practice-item h4 {
+    transition: color 0.3s;
+  }
+  .practice-item:hover h4 { color: var(--accent); }
+
+  /* Section divider — refined */
+  .section-divider {
+    padding: 0 4rem;
+    margin: 0;
+  }
+  .section-divider span {
+    color: rgba(154,148,144,0.7);
+    font-size: 0.62rem;
+  }
+  .section-divider::before, .section-divider::after {
+    background: rgba(139,115,85,0.1);
+  }
+
+  /* Footer — add a subtle top gradient flush */
+  .mask-footer {
+    background: linear-gradient(180deg, var(--cream) 0%, #f0ece3 100%);
+  }
+
+  /* Subpage hero — thin rule beneath */
+  .subpage-hero {
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0;
+  }
+
+  /* Contact info items — hover lift */
+  .contact-info-item {
+    transition: transform 0.25s;
+  }
+  .contact-info-item:hover { transform: translateY(-2px); }
+  .contact-info-item .ci-val {
+    transition: color 0.25s;
+  }
+  .contact-info-item:hover .ci-val { color: var(--accent); }
+  #lockout-screen {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #000;
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  #lockout-screen::before {
+    content: '';
+    position: absolute;
+    top: -20%; left: -20%;
+    width: 140%; height: 140%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.06;
+    pointer-events: none;
+    animation: drift-noise 0.14s steps(1) infinite;
+  }
+  #lockout-msg {
+    font-family: 'Courier New', monospace;
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    color: #5a1010;
+    text-align: center;
+    line-height: 2;
+    max-width: 480px;
+    padding: 2rem;
+    position: relative;
+    z-index: 2;
+    letter-spacing: 0.04em;
+  }
+  #lockout-msg .lockout-top {
+    font-size: 0.62rem;
+    color: #2a0808;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 2rem;
+  }
+  #lockout-msg .lockout-main {
+    display: block;
+    color: #7a1818;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+  }
+  #lockout-msg .lockout-sub {
+    display: block;
+    color: #3a0c0c;
+    font-size: 0.72rem;
+    line-height: 2.2;
+  }
+
+  /* ========== FIRST WRONG ATTEMPT OVERLAY ========== */
+  #warn-screen {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #000;
+    z-index: 9990;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  #warn-screen::before {
+    content: '';
+    position: absolute;
+    top: -20%; left: -20%;
+    width: 140%; height: 140%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.06;
+    pointer-events: none;
+    animation: drift-noise 0.14s steps(1) infinite;
+  }
+  #warn-msg {
+    font-family: 'Courier New', monospace;
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    color: #7a1818;
+    text-align: center;
+    line-height: 2.2;
+    max-width: 440px;
+    padding: 2rem;
+    position: relative;
+    z-index: 2;
+    letter-spacing: 0.04em;
+  }
+  #warn-msg .warn-label {
+    font-size: 0.58rem;
+    color: #2a0808;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 1.8rem;
+  }
+  #warn-msg .warn-main {
+    display: block;
+    color: #8b1c1c;
+    margin-bottom: 1.2rem;
+  }
+  #warn-msg .warn-sub {
+    display: block;
+    color: #3a0c0c;
+    font-size: 0.7rem;
+  }
+
+  /* Glitch flash utility */
+  .glitch-flash {
+    animation: glitch-flash-anim 0.08s steps(1) infinite !important;
+  }
+  @keyframes glitch-flash-anim {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  /* Whisper text on file landing */
+  .whisper {
+    position: absolute;
+    font-family: 'Courier New', monospace;
+    pointer-events: none;
+    user-select: none;
+    line-height: 1.6;
+  }
+  .whisper.white {
+    color: rgba(255,255,255,0.55);
+    font-size: 0.72rem;
+  }
+  .whisper.red {
+    color: rgba(100,10,10,0.75);
+    font-size: 0.68rem;
+  }
+
+  /* Random scattered noise chars on ARG */
+  .noise-char {
+    position: absolute;
+    font-family: monospace;
+    font-size: 0.55rem;
+    color: #1a1814;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* Torn horizontal rule */
+  .torn-hr {
+    border: none;
+    border-top: 1px solid #151210;
+    position: relative;
+    margin: 2rem 0;
+  }
+  .torn-hr::after {
+    content: attr(data-glyph);
+    position: absolute;
+    top: -0.55rem;
+    right: 0;
+    font-size: 0.6rem;
+    color: #252018;
+    letter-spacing: 0.1em;
+  }
+  /* Mobile hamburger */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+    z-index: 110;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 22px;
+    height: 1px;
+    background: var(--text-mid);
+    transition: transform 0.25s, opacity 0.25s;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  @media (max-width: 768px) {
+    .nav-hamburger { display: flex; }
+    .mask-nav .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0; right: 0;
+      background: rgba(247,243,236,0.97);
+      backdrop-filter: blur(8px);
+      flex-direction: column;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+      z-index: 105;
+    }
+    .mask-nav .nav-links.mobile-open { display: flex; }
+    .mask-nav .nav-links li { width: 100%; }
+    .mask-nav .nav-links a {
+      display: block;
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem;
+    }
+    .mask-nav { position: relative; flex-wrap: nowrap; }
+  }
+
+  @media (max-width: 768px) {
+
+    /* --- NAV --- */
+    .mask-nav {
+      padding: 1.2rem 1.5rem;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+    .mask-nav .nav-links {
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+    .mask-nav .nav-links a { font-size: 0.72rem; }
+
+    /* --- HERO --- */
+    .mask-hero {
+      padding: 5rem 1.5rem 4rem;
+    }
+    .mask-hero h1 { font-size: clamp(2.2rem, 9vw, 3.2rem); }
+    .mask-hero .subtext { font-size: 0.92rem; }
+
+    /* --- SECTION DIVIDER --- */
+    .section-divider { padding: 0 1.5rem; }
+
+    /* --- QUOTE --- */
+    .mask-quote-section { padding: 3.5rem 1.5rem; }
+    .mask-quote-section blockquote { font-size: clamp(1.2rem, 5vw, 1.5rem); }
+
+    /* --- CARDS --- */
+    .mask-cards { padding: 4rem 1.5rem; }
+    .cards-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+    .mask-card .roman { font-size: 5rem; }
+
+    /* --- TESTIMONIALS --- */
+    .mask-testimonials { padding: 3.5rem 1.5rem; }
+    .testimonials-grid { grid-template-columns: 1fr; gap: 2rem; }
+
+    /* --- FOOTER --- */
+    .mask-footer {
+      padding: 2rem 1.5rem;
+      grid-template-columns: 1fr;
+      text-align: center;
+      gap: 1rem;
+    }
+    .mask-footer .footer-links { justify-content: center; gap: 1.2rem; flex-wrap: wrap; }
+    .mask-footer .footer-right { text-align: center; }
+
+    /* --- SUB-PAGES --- */
+    .subpage-hero { padding: 5rem 1.5rem 3rem; }
+    .subpage-body { padding: 2rem 1.5rem 5rem; }
+    .pull-quote { padding: 1rem 1.2rem; font-size: 1.05rem; }
+
+    /* --- CONTACT --- */
+    .form-row { grid-template-columns: 1fr; gap: 1rem; }
+    .contact-info { grid-template-columns: 1fr; gap: 1.5rem; }
+
+    /* --- ARG SITE --- */
+    .arg-inner {
+      padding: 2rem 1.2rem;
+      max-width: 100%;
+    }
+    .arg-title { font-size: clamp(1.8rem, 8vw, 2.8rem); }
+    .arg-subtitle { font-size: 0.6rem; letter-spacing: 0.15em; }
+
+    /* Rein in extreme offsets on small screens */
+    .scatter-block.offset-right { margin-left: 8%; }
+    .scatter-block.offset-far-right { margin-left: 18%; }
+    .scatter-block.offset-extreme { margin-left: 28%; }
+    .scatter-block.huge-text { font-size: 1.5rem; }
+
+    /* Floating absolute sidebar text — hide on mobile (too narrow) */
+    .float-chaos { display: none; }
+
+    /* Ghost words — scale down */
+    .ghost-word { font-size: clamp(2rem, 10vw, 4rem) !important; }
+
+    /* Noise chars — keep but pull in from edges */
+    .noise-char { font-size: 0.42rem; }
+
+    /* Code section */
+    #code-section { padding: 1.5rem; transform: none !important; margin-left: 0 !important; margin-right: 0 !important; }
+    .arg-title { transform: rotate(-2deg) translateX(0.8rem) translateY(0.4rem) !important; }
+    #code-input-wrap { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+    .code-seg-wrap { flex-wrap: nowrap; }
+    #code-submit { width: auto; }
+
+    /* Margin notes — hide on mobile, too narrow */
+    .margin-note { display: none; }
+
+    /* Broken box */
+    .broken-box { margin-left: 0 !important; max-width: 100% !important; }
+
+    /* File landing whispers — reduce font, tighten positions */
+    .whisper.white { font-size: 0.58rem; }
+    .whisper.red   { font-size: 0.54rem; }
+
+    /* Pull whispers away from absolute edges on small screens */
+    #file-landing .whisper[style*="left:3%"]  { left: 2% !important; }
+    #file-landing .whisper[style*="right:3%"] { right: 2% !important; }
+    #file-landing .whisper[style*="left:6%"]  { left: 2% !important; }
+    #file-landing .whisper[style*="right:6%"] { right: 2% !important; }
+
+    /* File contents */
+    #file-inner { padding: 2rem 1.2rem; }
+    #file-content { font-size: 0.8rem; line-height: 1.85; }
+
+    /* Warn / lockout screens */
+    #warn-msg, #lockout-msg { padding: 1.5rem; font-size: 0.85rem; max-width: 90vw; }
+    #lockout-msg .lockout-main { font-size: 0.9rem; }
+
+    /* Transition text */
+    #transition-text { font-size: clamp(1rem, 5vw, 1.4rem); padding: 0 1.5rem; text-align: center; }
+  }
+
+  /* Slightly tighten mid-range tablets too */
+  @media (max-width: 1024px) and (min-width: 769px) {
+    .mask-nav { padding: 1.5rem 2.5rem; }
+    .mask-hero { padding: 7rem 2.5rem 5rem; }
+    .mask-quote-section { padding: 4rem 2.5rem; }
+    .mask-cards { padding: 5rem 2.5rem; }
+    .cards-grid { gap: 1.4rem; }
+    .mask-testimonials { padding: 4rem 2.5rem; }
+    .mask-footer { padding: 2.5rem; }
+    .subpage-hero { padding: 6rem 2.5rem 4rem; }
+    .subpage-body { padding: 2.5rem 2.5rem 6rem; }
+    .contact-info { grid-template-columns: repeat(2, 1fr); }
+    .testimonials-grid { gap: 2rem; }
+    .arg-inner { padding: 2.5rem 1.5rem; }
+    .scatter-block.offset-extreme { margin-left: 40%; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- ===================== MASK SITE ===================== -->
+<div id="mask-site">
+  <nav class="mask-nav">
+    <div class="logo" onclick="showMaskPage('home')">Letting Go</div>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links-list">
+      <li><a onclick="closeMobileNav();showMaskPage('reflect')" id="nav-reflect">Reflect</a></li>
+      <li><a onclick="closeMobileNav();showMaskPage('understand')" id="nav-understand">Understand</a></li>
+      <li><a onclick="closeMobileNav();showMaskPage('release')" id="nav-release">Release</a></li>
+      <li><a onclick="closeMobileNav();showMaskPage('contact')" id="nav-contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ===== HOME ===== -->
+  <div id="page-home" class="mask-page active">
+    <div class="home-orbs">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="orb orb-4"></div>
+      <div class="orb orb-5"></div>
+    </div>
+
+    <section class="mask-hero">
+      <p class="eyebrow">A Space for Healing</p>
+      <h1>The past does not<br>define <em>who you are</em><br>becoming.</h1>
+      <p class="subtext">
+        Healing is not linear. It is not clean. But it is possible — 
+        one small release at a time, one honest breath, one moment of 
+        choosing yourself again.
+      </p>
+      <a class="hero-cta" onclick="showMaskPage('reflect')">Begin your practice →</a>
+    </section>
+
+    <section class="mask-quote-section">
+      <blockquote>
+        "The <a class="hidden-portal-word" id="portal-link" href="javascript:void(0)" tabindex="-1" aria-hidden="true">wound</a> is the place where the light enters you."
+      </blockquote>
+      <p class="attribution">— Rumi</p>
+    </section>
+
+    <section class="mask-cards">
+      <p class="section-label">Themes of Practice</p>
+      <div class="cards-grid">
+        <div class="mask-card">
+          <span class="roman">VII</span>
+          <p class="card-num">I &nbsp;/&nbsp; Acknowledgement</p>
+          <h3>The Slow Descent Into Knowing</h3>
+          <p>We resist what we already understand. Acknowledgement is not a sudden revelation — it is a descent, a gradual surrender to what the body has always known. Begin here. Not with answers, but with willingness.</p>
+        </div>
+        <div class="mask-card">
+          <span class="roman">X</span>
+          <p class="card-num">II &nbsp;/&nbsp; Accountability</p>
+          <h3>What Remains When You Look Closely</h3>
+          <p>Those who carry unresolved weight are rarely unaware of what they did. The body keeps a ledger. The mind files things away. Sitting with that quiet — without distraction — is perhaps the most honest thing a person can do.</p>
+        </div>
+        <div class="mask-card">
+          <span class="roman">XIV</span>
+          <p class="card-num">III &nbsp;/&nbsp; Release</p>
+          <h3>Descent Before the Return</h3>
+          <p>Before any true release, there is a final descent — the deepest one. Into grief, into guilt, into the uncomfortable architecture of the self. Only from the bottom of that descent does the path upward become visible.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mask-testimonials">
+      <p class="testimonials-label">Words From Those Who Have Walked This Path</p>
+      <div class="testimonials-grid">
+        <div class="testimonial-item">
+          <blockquote>"I came here not knowing what I was carrying. I left knowing I didn't have to carry it alone."</blockquote>
+          <span class="t-attr">— M.R., three months into practice</span>
+        </div>
+        <div class="testimonial-item">
+          <blockquote>"Letting go is not forgetting. This space helped me understand the difference — and finally breathe."</blockquote>
+          <span class="t-attr">— Anonymous</span>
+        </div>
+        <div class="testimonial-item">
+          <blockquote>"There is something quietly profound about being asked to sit still long enough to hear yourself."</blockquote>
+          <span class="t-attr">— T.O., six weeks in</span>
+        </div>
+      </div>
+    </section>
+
+    <footer class="mask-footer">
+      <p>© Letting Go — A Path Forward</p>
+      <div class="footer-links">
+        <a onclick="showMaskPage('reflect')">Reflect</a>
+        <a onclick="showMaskPage('understand')">Understand</a>
+        <a onclick="showMaskPage('release')">Release</a>
+        <a onclick="showMaskPage('contact')">Contact</a>
+      </div>
+      <p class="footer-right">This space is not a substitute for professional care.</p>
+    </footer>
+  </div>
+
+  <!-- ===== REFLECT ===== -->
+  <div id="page-reflect" class="mask-page">
+    <div class="home-orbs">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-3"></div>
+    </div>
+    <div class="subpage-hero">
+      <p class="eyebrow">Practice One</p>
+      <h2>To <em>reflect</em> is to witness<br>without judgment.</h2>
+      <p>Most of us move through life without pausing to look back — not because we are at peace with the past, but because looking feels dangerous. Reflection, practiced gently, is not an act of pain. It is an act of care.</p>
+    </div>
+    <div class="subpage-body">
+      <div class="pull-quote">"What we do not make conscious appears in our lives as fate." — Carl Jung</div>
+      <div class="practice-list">
+        <div class="practice-item">
+          <p class="p-num">Practice 01</p>
+          <h4>The Unsent Letter</h4>
+          <p>Write a letter to someone — or something — from your past that still holds weight. You will not send it. That is the point. The act of writing places the feeling outside of you, makes it visible, makes it smaller. Burn it, keep it, or release it to water.</p>
+        </div>
+        <div class="practice-item">
+          <p class="p-num">Practice 02</p>
+          <h4>Timed Stillness</h4>
+          <p>Set a timer for ten minutes. Sit somewhere quiet. Do not fill the silence — let thoughts arrive and leave like visitors you are not obligated to entertain. Notice what comes most insistently. That insistence is information.</p>
+        </div>
+        <div class="practice-item">
+          <p class="p-num">Practice 03</p>
+          <h4>The Honest Inventory</h4>
+          <p>List five things you have not forgiven yourself for. Then, beside each one, write what you would say to a friend who confessed the same. The gap between those two responses is where your work begins.</p>
+        </div>
+        <div class="practice-item">
+          <p class="p-num">Practice 04</p>
+          <h4>Morning Pages</h4>
+          <p>Each morning, before checking your phone, write three pages of longhand. Whatever comes. No grammar, no sense, no audience. This is not journaling — it is draining the overnight accumulation so that something cleaner can enter the day.</p>
+        </div>
+      </div>
+    </div>
+    <footer class="mask-footer">
+      <p>© Letting Go — A Path Forward</p>
+      <div class="footer-links">
+        <a onclick="showMaskPage('home')">Home</a>
+        <a onclick="showMaskPage('understand')">Understand</a>
+        <a onclick="showMaskPage('release')">Release</a>
+        <a onclick="showMaskPage('contact')">Contact</a>
+      </div>
+      <p class="footer-right">This space is not a substitute for professional care.</p>
+    </footer>
+  </div>
+
+  <!-- ===== UNDERSTAND ===== -->
+  <div id="page-understand" class="mask-page">
+    <div class="home-orbs">
+      <div class="orb orb-2"></div>
+      <div class="orb orb-4"></div>
+    </div>
+    <div class="subpage-hero">
+      <p class="eyebrow">Practice Two</p>
+      <h2><em>Understanding</em> is not<br>the same as excusing.</h2>
+      <p>We confuse the two. To understand why something happened — why you did what you did, why they did what they did — is not to condone it. Understanding is a tool for liberation, not absolution.</p>
+    </div>
+    <div class="subpage-body">
+      <div class="pull-quote">"Between stimulus and response there is a space. In that space lies our freedom." — Viktor Frankl</div>
+      <div class="practice-list">
+        <div class="practice-item">
+          <p class="p-num">Reading 01</p>
+          <h4>The Roots of Avoidance</h4>
+          <p>We avoid what we cannot face — not out of weakness, but out of a nervous system designed to protect us. Understanding your own avoidance patterns begins with compassion, not criticism. Ask: what am I protecting myself from, and is that protection still necessary?</p>
+        </div>
+        <div class="practice-item">
+          <p class="p-num">Reading 02</p>
+          <h4>What the Body Remembers</h4>
+          <p>Emotional memory is stored not only in the mind but in the body. Tension in the jaw, tightness across the chest, the instinctive flinch — these are not irrational. They are echoes. The body speaks the language of the past. Learning to listen to it without alarm is part of understanding.</p>
+        </div>
+        <div class="practice-item">
+          <p class="p-num">Reading 03</p>
+          <h4>The Anatomy of Resentment</h4>
+          <p>Resentment is not hatred. It is a wound that was never fully acknowledged. It lives in the space between what happened and what we wished had happened instead. To understand your resentments is not to dissolve them — it is to stop being controlled by them.</p>
+        </div>
+        <div class="practice-item">
+          <p class="p-num">Reading 04</p>
+          <h4>Why We Hold On</h4>
+          <p>Holding on feels like loyalty. It feels like proof that what happened mattered. The fear beneath release is that letting go means it didn't matter — that you didn't matter. This is never true. Release is not erasure. It is choosing, at last, to matter to yourself.</p>
+        </div>
+      </div>
+    </div>
+    <footer class="mask-footer">
+      <p>© Letting Go — A Path Forward</p>
+      <div class="footer-links">
+        <a onclick="showMaskPage('home')">Home</a>
+        <a onclick="showMaskPage('reflect')">Reflect</a>
+        <a onclick="showMaskPage('release')">Release</a>
+        <a onclick="showMaskPage('contact')">Contact</a>
+      </div>
+      <p class="footer-right">This space is not a substitute for professional care.</p>
+    </footer>
+  </div>
+
+  <!-- ===== RELEASE ===== -->
+  <div id="page-release" class="mask-page">
+    <div class="home-orbs">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-5"></div>
+    </div>
+    <div class="subpage-hero">
+      <p class="eyebrow">Practice Three</p>
+      <h2>Release is not a single<br>moment. It is a <em>direction.</em></h2>
+      <p>We expect release to feel like a door swinging open. More often it feels like a slow exhale — one that must be repeated. Practiced. Chosen again each morning, each time the weight returns.</p>
+    </div>
+    <div class="subpage-body">
+      <div class="pull-quote">"You can only lose what you cling to." — The Buddha</div>
+      <div class="practice-list">
+        <div class="practice-item">
+          <p class="p-num">Practice 01</p>
+          <h4>The Breath as Anchor</h4>
+          <p>When the past pulls you under, the breath is the one thing that belongs only to right now. Inhale for four counts. Hold for four. Exhale for six. The extended exhale signals safety to the nervous system — a small act of release, available always, requiring nothing.</p>
+        </div>
+        <div class="practice-item">
+          <p class="p-num">Practice 02</p>
+          <h4>Releasing Through the Body</h4>
+          <p>Physical release is underestimated. Shaking, crying, vigorous movement, cold water — these are not symptoms of losing control but pathways through it. The body knows how to release what the mind refuses to name. Give it permission.</p>
+        </div>
+        <div class="practice-item">
+          <p class="p-num">Practice 03</p>
+          <h4>The Daily Letting Go</h4>
+          <p>Each evening, name one thing you are releasing — however small. A moment of irritation. A loop of regret. A conversation that ran in your mind all day. Naming it and setting it down is not naïve. It is practice. And practice is how release becomes possible.</p>
+        </div>
+        <div class="practice-item">
+          <p class="p-num">Practice 04</p>
+          <h4>Grief as Completion</h4>
+          <p>We cannot release what we have not fully grieved. Grief is not weakness — it is the mind completing an experience that was interrupted. If you find release impossible, ask whether grief has been permitted. Often, that is where the path begins.</p>
+        </div>
+      </div>
+    </div>
+    <footer class="mask-footer">
+      <p>© Letting Go — A Path Forward</p>
+      <div class="footer-links">
+        <a onclick="showMaskPage('home')">Home</a>
+        <a onclick="showMaskPage('reflect')">Reflect</a>
+        <a onclick="showMaskPage('understand')">Understand</a>
+        <a onclick="showMaskPage('contact')">Contact</a>
+      </div>
+      <p class="footer-right">This space is not a substitute for professional care.</p>
+    </footer>
+  </div>
+
+  <!-- ===== CONTACT ===== -->
+  <div id="page-contact" class="mask-page">
+    <div class="home-orbs">
+      <div class="orb orb-3"></div>
+      <div class="orb orb-5"></div>
+    </div>
+    <div class="subpage-hero">
+      <p class="eyebrow">Reach Out</p>
+      <h2>You do not have to<br>carry this <em>alone.</em></h2>
+      <p>If something here has reached you, and you would like to go further, we are here to listen. There is no obligation, no pressure. Only a space for what you need to say.</p>
+    </div>
+    <div class="subpage-body">
+      <div class="contact-info">
+        <div class="contact-info-item">
+          <span class="ci-label">Email</span>
+          <span class="ci-val">hello@lettinggo.space</span>
+        </div>
+        <div class="contact-info-item">
+          <span class="ci-label">Hours</span>
+          <span class="ci-val">Mon – Fri, 9am – 6pm</span>
+        </div>
+        <div class="contact-info-item">
+          <span class="ci-label">Response</span>
+          <span class="ci-val">Within 48 hours</span>
+        </div>
+      </div>
+      <form class="contact-form" onsubmit="return false;">
+        <div class="form-row">
+          <div class="form-field">
+            <label>First Name</label>
+            <input type="text" placeholder="Your name">
+          </div>
+          <div class="form-field">
+            <label>Email Address</label>
+            <input type="email" placeholder="your@email.com">
+          </div>
+        </div>
+        <div class="form-field">
+          <label>What brings you here</label>
+          <select>
+            <option value="">Select a theme</option>
+            <option>Grief and loss</option>
+            <option>Guilt and accountability</option>
+            <option>Relationship to the past</option>
+            <option>General enquiry</option>
+            <option>Something I cannot name yet</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>What you would like to say</label>
+          <textarea placeholder="There is no wrong way to begin."></textarea>
+        </div>
+        <button class="form-submit" type="submit">Send this →</button>
+      </form>
+    </div>
+    <footer class="mask-footer">
+      <p>© Letting Go — A Path Forward</p>
+      <div class="footer-links">
+        <a onclick="showMaskPage('home')">Home</a>
+        <a onclick="showMaskPage('reflect')">Reflect</a>
+        <a onclick="showMaskPage('understand')">Understand</a>
+        <a onclick="showMaskPage('release')">Release</a>
+      </div>
+      <p class="footer-right">This space is not a substitute for professional care.</p>
+    </footer>
+  </div>
+</div>
+
+<!-- ===================== ARG SITE ===================== -->
+<div id="arg-site">
+  <canvas id="static-canvas"></canvas>
+  <div id="glitch-tear"></div>
+  <div id="arg-content">
+
+    <!-- Ghost watermark layer -->
+    <div class="ghost-layer" style="height:100%">
+      <span class="ghost-word" style="top:4%;left:-2%;transform:rotate(-3deg);opacity:0.035">FOUND</span>
+      <span class="ghost-word" style="top:22%;left:30%;transform:rotate(1.5deg);font-size:5rem;opacity:0.025">descend</span>
+      <span class="ghost-word" style="top:48%;left:-5%;transform:rotate(-1deg);font-size:4rem;opacity:0.03">WATCHING</span>
+      <span class="ghost-word" style="top:68%;left:20%;transform:rotate(4deg);font-size:3.5rem;opacity:0.02">forgive</span>
+      <span class="ghost-word" style="top:85%;left:50%;transform:rotate(-2deg);font-size:6rem;opacity:0.02">NO</span>
+    </div>
+
+    <!-- Floating chaos absolute elements -->
+    <span class="float-chaos" style="top:2%;right:3%;font-size:0.5rem;color:#1a1612;transform:rotate(3deg);animation:stutter-opacity-slow 17s infinite">INSTANCE_ID: 0x00000001<br>SESSION: NULL<br>AUTH: REVOKED</span>
+    <span class="float-chaos" style="top:15%;right:1%;font-size:0.45rem;color:#251e18;transform:rotate(-2deg)">▓▒░<br>▒░▓<br>░▓▒</span>
+    <span class="float-chaos" style="top:35%;left:0%;font-size:0.4rem;color:#1e1a14;transform:rotate(90deg);transform-origin:left top;letter-spacing:0.2em;animation:stutter-opacity-slow 23s 4s infinite">YOU SHOULD NOT BE HERE YOU SHOULD NOT BE HERE YOU SHOULD</span>
+    <span class="float-chaos" style="top:55%;right:0%;font-size:0.38rem;color:#201c16;transform:rotate(-90deg);transform-origin:right top;letter-spacing:0.15em">NOT FOUND NOT FOUND NOT FOUND NOT FOUND NOT FOUND NOT</span>
+    <span class="float-chaos" style="top:72%;right:2%;font-size:0.48rem;color:#1a1612;transform:rotate(1.5deg);animation:stutter-opacity 19s 2s infinite">ERR_THREAD_UNWIND<br>ERR_THREAD_UNWIND<br>ERR_THREAD_UNWIND</span>
+    <span class="float-chaos" style="top:88%;left:1%;font-size:0.42rem;color:#252018;transform:rotate(-1deg)">0xDEADBEEF 0xDEADBEEF<br>0xCAFEBABE 0xDEADC0DE<br>0xBADDCAFE 0x00000000</span>
+
+    <div class="arg-inner">
+
+      <!-- Noise chars — more of them, more spread -->
+      <span class="noise-char" style="top:3%;left:78%">0x4f</span>
+      <span class="noise-char" style="top:9%;left:91%">ERR</span>
+      <span class="noise-char" style="top:16%;left:85%">///</span>
+      <span class="noise-char" style="top:24%;left:94%">0x00</span>
+      <span class="noise-char" style="top:31%;left:79%">NUL</span>
+      <span class="noise-char" style="top:6%;left:3%">▒▒</span>
+      <span class="noise-char" style="top:19%;left:1%">░░░</span>
+      <span class="noise-char" style="top:38%;left:4%">▓</span>
+      <span class="noise-char" style="top:47%;left:92%">▒▓░</span>
+      <span class="noise-char" style="top:52%;left:88%">0xFF</span>
+      <span class="noise-char" style="top:61%;left:97%">SIGFAULT</span>
+      <span class="noise-char" style="top:67%;left:2%">▓▒░▓</span>
+      <span class="noise-char" style="top:74%;left:89%">NULL</span>
+      <span class="noise-char" style="top:82%;left:6%">0xAA</span>
+      <span class="noise-char" style="top:91%;left:82%">▒▒▓</span>
+      <span class="noise-char" style="top:44%;left:50%;font-size:0.35rem;color:#151210">STACK OVERFLOW</span>
+      <span class="noise-char" style="top:77%;left:42%;font-size:0.32rem;color:#120f0a">heap: 0 bytes remaining</span>
+
+      <!-- ======= OPENING ======= -->
+
+      <span class="artifact" style="animation-delay:0s">■ ■ □ ■ □ □ ■ ■ ■ □ ■ □ ■ □ □ □ ■ ■ □ ■ □ □ ■ □ ■ ■ □ □ □ ■ ■</span>
+      <span class="artifact" style="animation-delay:2.1s;margin-top:-0.2rem">□ ■ ■ □ □ ■ □ ■ □ □ ■ ■ □ ■ ■ □ □ ■ □ ■ ■ □ □ ■ □ □ □ ■ □ □</span>
+
+      <div style="position:relative;padding-bottom:1.5rem;padding-top:0.5rem;overflow:visible">
+        <h1 class="arg-title">found you.</h1>
+        <span class="margin-note" style="top:0.5rem">ACCESS_LOG[001]</span>
+      </div>
+
+      <div class="scatter-block tilt-neg" style="margin-top:-0.5rem;margin-bottom:0.2rem">
+        <p class="arg-subtitle" style="animation:stutter-opacity-slow 22s 3s infinite">[ depth / / <span class="redacted">unknown</span> ] &nbsp; [ origin / / <span class="redacted">unknown</span> ] &nbsp; [ <span class="redacted">██████</span> ]</p>
+      </div>
+
+      <hr class="torn-hr" data-glyph="0xFF0F44 0xFF0F45 0xFF0F46 —">
+
+      <div class="scatter-block offset-right tilt-pos" style="animation:jitter-a 14s infinite">
+        you weren't supposed to be here.<br>
+        <span style="opacity:0.35;font-size:0.75rem">or maybe you were.</span><br>
+        <span class="micro-text">[ this line was not written by me ]</span>
+      </div>
+
+      <span class="artifact" style="animation-delay:0.5s">PROCESS_FAULT: memory segment [0x00A3] read error — continuing anyway .............</span>
+      <span class="artifact" style="animation-delay:4s;margin-top:-0.3rem;margin-left:8%">WARNING: previous fault unhandled. new fault queued. queue: <span style="color:#5a0000">FULL</span></span>
+
+      <div class="scatter-block tilt-huge offset-left" style="margin-top:2.5rem;margin-bottom:-0.5rem">
+        <span class="echo-wrap" data-echo="something is here." style="font-size:1.4rem;color:#d0c8b8">something is here.</span>
+      </div>
+
+      <div class="scatter-block offset-extreme tilt-neg tiny-text very-broken" style="margin-top:0.3rem">
+        it &nbsp; has &nbsp; been &nbsp; here &nbsp; for &nbsp; longer
+      </div>
+
+      <div class="scatter-block" style="margin-left:8%;transform:rotate(-2.4deg);font-size:0.7rem;color:#3a3028;margin-top:-0.3rem;animation:stutter-opacity 28s 6s infinite">
+        do &nbsp;not &nbsp;look &nbsp;for &nbsp;the &nbsp;source<br>
+        <span style="margin-left:2em;color:#252018;font-size:0.6rem">the source has already found you</span>
+      </div>
+
+      <div class="broken-box" style="margin:2rem 0 1rem;margin-left:20%;max-width:60%;position:relative">
+        <span class="margin-note" style="top:0">OBSERVE</span>
+        <span style="font-size:0.65rem;color:#3a3028;display:block;transform:rotate(-0.5deg)">
+          &gt; running trace on visitor<br>
+          &gt; <span class="redacted">████████████</span> located<br>
+          &gt; prior visits: <span class="redacted">██</span><br>
+          &gt; flagged: <span class="red-text" style="font-size:0.65rem">YES</span>
+        </span>
+      </div>
+
+      <hr class="torn-hr" data-glyph="— — —">
+
+      <span class="artifact" style="animation-delay:1s">▓▓▓▓▒▒░░░░░▒▒▓▓▓▓▓▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
+      <span class="artifact" style="animation-delay:0s">THREAD_DEPTH: 9/9 ■ NO FURTHER RECURSION ■ LIMIT REACHED ■ <span style="color:#5a0000">CONTINUING REGARDLESS</span></span>
+      <span class="artifact" style="animation-delay:3s">heap corruption detected at 0xDEAD — suppressing ——————————————————————————</span>
+      <span class="artifact" style="animation-delay:5.5s;margin-left:15%">kernel panic (suppressed) — reason: <span class="redacted">████████████████</span></span>
+      <span class="artifact" style="animation-delay:1.8s;margin-left:30%">continuing. it asked me to continue.</span>
+
+      <!-- ======= MID SECTION ======= -->
+
+      <div style="position:relative;margin:3rem 0 0">
+        <div class="scatter-block tilt-big huge-text" style="animation:rgb-drift 13s 2s infinite">
+          do you<br>recognise
+        </div>
+        <div class="scatter-block tilt-neg" style="margin-left:40%;margin-top:-1rem;font-size:0.88rem;color:#a09880">
+          what brought you<br>
+          <span class="red-text" style="font-size:0.85em">here?</span><br>
+          <span style="font-size:0.55rem;color:#302820;display:block;margin-top:0.3rem">most do not. most cannot.</span>
+        </div>
+      </div>
+
+      <div class="scatter-block ghost" style="margin-left:5%;transform:rotate(-3.1deg);font-size:0.78rem;animation:stutter-opacity-slow 25s 8s infinite">
+        i tried to tell them.<br>
+        they couldn't hear me either.
+      </div>
+
+      <div class="scatter-block" style="margin-left:60%;transform:rotate(-0.5deg);font-size:0.65rem;color:#3a3028;animation:jitter-b 8s infinite">
+        wrong turn.<br>
+        <span style="font-size:0.52rem;color:#252018">wrong turn.</span><br>
+        <span style="font-size:0.38rem;color:#151210">wrong turn.</span><br>
+        <span style="font-size:0.28rem;color:#0d0a08">wrong turn.</span>
+      </div>
+
+      <div class="scatter-block offset-right tilt-pos" style="font-size:0.75rem;color:#504840;position:relative">
+        <span class="margin-note" style="top:0;right:-1rem">LOG_FRAGMENT</span>
+        [ log: visitor count &nbsp;— &nbsp;000001 ]<br>
+        [ log: prior visitors — &nbsp;000000 ]<br>
+        <span class="red-text" style="font-size:0.75rem">[ log: expected visitors — 000000 ]</span><br>
+        <span style="font-size:0.55rem;color:#252018">[ log: <span class="redacted">███████████████████</span> ]</span>
+      </div>
+
+      <span class="artifact" style="animation-delay:1.5s;margin:1rem 0">░░▒▒▓▓███████████████▓▓▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
+
+      <div style="display:flex;gap:0;flex-direction:column;margin:0.5rem 0">
+        <div class="scatter-block tilt-neg" style="font-size:0.78rem;color:#5a5048;margin-left:5%;transform:rotate(-2.4deg);animation:stutter-pos 19s 4s infinite">
+          you can feel it can't you<br>
+          <span style="color:#302820;font-size:0.72rem">the thing that doesn't go away</span><br>
+          <span style="color:#201a14;font-size:0.58rem;display:block;margin-top:0.2rem">it has a name. <span class="struck">you know the name.</span></span>
+        </div>
+        <div class="scatter-block tilt-wild" style="margin-left:45%;font-size:0.6rem;color:#2a2018;margin-top:-0.8rem">
+          <span class="struck">it knows yours too.</span>
+        </div>
+      </div>
+
+      <div class="scatter-block ghost-red offset-far-right tilt-neg" style="font-size:0.7rem;margin-top:1.5rem;line-height:2">
+        i wrote this for you.<br>
+        specifically.<br>
+        i did not know your name when i wrote it.<br>
+        <span style="font-size:0.55rem;opacity:0.7">i know it now.</span>
+      </div>
+
+      <span class="artifact" style="animation-delay:7s;margin:0.5rem 0;margin-left:10%">fork() failed — child process abandoned — orphan retained by <span class="redacted">██████</span></span>
+
+      <div class="scatter-block tilt-pos" style="margin-left:12%;font-size:0.68rem;color:#3a3028;margin-top:1rem;position:relative">
+        <span class="margin-note" style="right:-1.5rem;top:0">UNVERIFIED</span>
+        someone else was here before you.<br>
+        <span style="color:#252018;font-size:0.6rem">they did not finish.<br>
+        <span class="struck">they could not finish.</span></span>
+      </div>
+
+      <hr class="torn-hr" data-glyph="░ ▒ ▓ █ ▓ ▒ ░">
+
+      <!-- ======= NUMBERS / CLUE ======= -->
+
+      <div class="scatter-block tilt-neg" style="margin:2.5rem 0 0.3rem;font-size:0.95rem;position:relative">
+        <span class="margin-note" style="right:-1rem;top:0">PAYLOAD_A</span>
+        there are numbers in the old place.<br>
+        they were left for you.<br>
+        <span style="font-size:0.6rem;color:#3a3028;display:block;margin-top:0.3rem">not for anyone else. <span class="struck">there was no one else.</span></span>
+      </div>
+
+      <div class="scatter-block offset-right tilt-pos tiny-text broken" style="animation:jitter-a 20s 3s infinite">
+        the first and the last make the descent.<br>
+        the second always accuses.<br>
+        <span class="micro-text" style="display:block;margin-top:0.4rem;letter-spacing:0.1em">[ if you are reading this you already know what to do ]</span>
+      </div>
+
+      <div class="scatter-block tilt-huge" style="margin-left:8%;font-size:0.62rem;color:#2a2018;margin-top:-0.5rem;animation:stutter-opacity-slow 31s 9s infinite">
+        look at where you came from.<br>
+        look carefully.<br>
+        <span class="micro-text" style="display:block">VII &nbsp;&nbsp; X &nbsp;&nbsp; XIV</span>
+      </div>
+
+      <span class="artifact" style="animation-delay:2.3s;margin:1rem 0">CIPHER_KEY: [<span class="redacted">███</span>]-[<span class="redacted">██</span>]-[<span class="redacted">███</span>] &nbsp; STATUS: AWAITING INPUT ——————————————</span>
+
+      <hr class="torn-hr" data-glyph="■ ■ ■">
+
+      <!-- ======= CODE ENTRY ======= -->
+
+      <div class="scatter-block tilt-pos" style="margin-left:0;font-size:0.65rem;color:#2a2018;margin-bottom:-1rem">
+        &gt; awaiting.<br>
+        &gt; it is patient.<br>
+        &gt; <span class="red-text" style="font-size:0.65rem">are you?</span>
+      </div>
+
+      <div id="code-section" style="transform: rotate(-1.8deg) translateX(1.2rem); margin-left: -0.5rem; margin-right: 1rem;">
+        <p id="code-hint">
+          "The first and the last make the descent,<br>
+          and the second always accuses."<br><br>
+          <span style="color:#302820;font-size:0.7rem">— enter what you know. format: XX-XX-XX</span>
+        </p>
+        <div id="code-input-wrap">
+          <div class="code-seg-wrap">
+            <input class="code-seg code-seg-1" id="code-seg-1" type="number" min="0" max="99" placeholder="XX" maxlength="2" inputmode="numeric" autocomplete="off" spellcheck="false">
+            <span class="code-dash">—</span>
+            <input class="code-seg code-seg-2" id="code-seg-2" type="number" min="0" max="99" placeholder="XX" maxlength="2" inputmode="numeric" autocomplete="off" spellcheck="false">
+            <span class="code-dash">—</span>
+            <input class="code-seg code-seg-3" id="code-seg-3" type="number" min="0" max="99" placeholder="XX" maxlength="2" inputmode="numeric" autocomplete="off" spellcheck="false">
+          </div>
+          <button id="code-submit">enter</button>
+        </div>
+        <p id="code-error">incorrect. it knows.</p>
+      </div>
+
+      <!-- ======= FOOTER CHAOS ======= -->
+
+      <span class="artifact" style="margin-top:2rem;animation-delay:0.8s">■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■</span>
+
+      <div style="position:relative;margin:1.5rem 0">
+        <div class="scatter-block tilt-neg" style="font-size:0.7rem;color:#352e28;animation:stutter-pos 17s infinite">
+          if you are reading this far<br>
+          then you already know<br>
+          <span class="red-text" style="font-size:0.7rem">it is too late to leave.</span>
+        </div>
+
+        <div class="scatter-block tilt-pos" style="margin-left:48%;font-size:0.58rem;color:#201a14;transform:rotate(1.8deg);margin-top:-1.5rem">
+          it already left with you anyway<br>
+          <span style="font-size:0.45rem;color:#151210">it always does</span>
+        </div>
+      </div>
+
+      <div class="scatter-block ghost tilt-huge" style="font-size:0.65rem;margin-left:10%;margin-top:1rem">
+        i am sorry.<br>
+        <span class="struck" style="font-size:0.55rem">no i am not.</span><br>
+        <span class="micro-text" style="display:block;margin-top:0.2rem">[ REDACTED BY REQUEST OF <span class="redacted">████████</span> ]</span>
+      </div>
+
+      <span class="artifact" style="animation-delay:4.5s;margin-top:0.5rem">WATCHDOG: still running — elapsed: <span style="color:#5a0000;animation:pulse-red 3s infinite">∞</span> — exit signal: NONE</span>
+      <span class="artifact" style="animation-delay:9s;margin-left:20%">thread [<span class="redacted">███</span>] has been watching since your arrival</span>
+      <span class="artifact" style="animation-delay:11s;margin-left:40%">it will continue.</span>
+
+      <div class="scatter-block micro-text" style="margin-left:5%;margin-top:2rem;transform:rotate(-1deg);line-height:2;animation:stutter-opacity-slow 37s 12s infinite">
+        some say it was futile. i know theyre right. i dont care.<br>
+        he couldnt hear me. so someone else needs to.<br>
+        <span style="color:#151210">a single fragment is all you need.</span>
+      </div>
+
+      <span class="artifact" style="margin-bottom:2rem;animation-delay:0.3s">EOF / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /</span>
+      <span class="artifact" style="margin-bottom:3rem;animation-delay:6s;margin-left:30%">EOF / / CONFIRM? / / NO CONFIRM RECEIVED / / CONTINUING / / EOF / / EOF</span>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===================== WARN SCREEN (first wrong attempt) ===================== -->
+<div id="warn-screen">
+  <div id="warn-msg">
+    <span class="warn-label">[ access denied — attempt 1 of 2 ]</span>
+    <span class="warn-main">it noticed.<br>it is still watching.</span>
+    <span class="warn-sub">you have one attempt remaining.<br>choose carefully.<br>it does not forget.</span>
+  </div>
+</div>
+
+<!-- ===================== LOCKOUT SCREEN (permanent) ===================== -->
+<div id="lockout-screen">
+  <div id="lockout-msg">
+    <span class="lockout-top">[ access permanently revoked ]</span>
+    <span class="lockout-main">forgiveness was never yours to ask for.</span>
+    <span class="lockout-sub">
+      you were seen the moment you arrived.<br>
+      every wrong turn recorded.<br>
+      every hesitation noted.<br><br>
+      it does not grant second chances.<br>
+      neither do we.<br><br>
+      you were never supposed to find this.<br>
+      and now you never will.
+    </span>
+  </div>
+</div>
+
+<!-- ===================== TRANSITION SCREEN ===================== -->
+<div id="transition-screen">
+  <div id="transition-text"></div>
+</div>
+
+<!-- ===================== FILE PAGE ===================== -->
+<div id="file-page">
+  <!-- Landing: centred file icon, click to open -->
+  <div id="file-landing">
+    <!-- white whispers: urging to read -->
+    <span class="whisper white" style="top:8%;left:6%;transform:rotate(-1.5deg)">read it.<br>you need to read it.</span>
+    <span class="whisper white" style="top:14%;right:9%;transform:rotate(0.8deg)">open it.</span>
+    <span class="whisper white" style="top:38%;left:3%;transform:rotate(-2.1deg)">it was left for you.<br>only you.</span>
+    <span class="whisper white" style="bottom:22%;left:8%;transform:rotate(1.2deg)">please.<br>read it.</span>
+    <span class="whisper white" style="top:55%;right:5%;transform:rotate(-0.7deg)">you already know<br>what it says.</span>
+    <span class="whisper white" style="bottom:10%;right:10%;transform:rotate(1.8deg)">open it.<br>now.</span>
+    <span class="whisper white" style="top:25%;left:18%;transform:rotate(-0.4deg);font-size:0.58rem;opacity:0.35">someone is waiting.</span>
+    <span class="whisper white" style="bottom:35%;right:18%;transform:rotate(2deg);font-size:0.55rem;opacity:0.3">it has been here a long time.</span>
+    <!-- red whispers: warning to back away -->
+    <span class="whisper red" style="top:5%;right:6%;transform:rotate(1.3deg)">do not open it.</span>
+    <span class="whisper red" style="top:28%;right:3%;transform:rotate(-1.9deg)">back away.<br>close this.</span>
+    <span class="whisper red" style="bottom:28%;left:4%;transform:rotate(0.6deg)">you are not ready.<br>leave.</span>
+    <span class="whisper red" style="top:48%;left:7%;transform:rotate(-2.4deg)">stop.</span>
+    <span class="whisper red" style="bottom:14%;right:5%;transform:rotate(1.1deg)">back away.<br>now.</span>
+    <span class="whisper red" style="top:18%;left:4%;transform:rotate(2.2deg);font-size:0.55rem;opacity:0.5">this does not concern you.</span>
+    <span class="whisper red" style="bottom:5%;left:15%;transform:rotate(-0.9deg);font-size:0.55rem;opacity:0.45">walk away.</span>
+    <div id="file-icon">
+      <div id="file-icon-lines">
+        <span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+    <span id="file-icon-name">forgive.not</span>
+    <span id="file-open-hint">[ click to open ]</span>
+  </div>
+  <!-- Contents: revealed on click -->
+  <div id="file-inner">
+    <div id="file-header">
+      <span class="file-label">retrieved file</span>
+      <span class="file-name">forgive.not</span>
+      <div class="file-divider"></div>
+    </div>
+    <div id="file-content"><span id="file-cursor"></span></div>
+    <div id="search-msg"><span id="search-cursor"></span></div>
+  </div>
+</div>
+
+<script>
+// ====== MOBILE NAV ======
+document.getElementById('nav-hamburger').addEventListener('click', function() {
+  this.classList.toggle('open');
+  document.getElementById('nav-links-list').classList.toggle('mobile-open');
+});
+function closeMobileNav() {
+  document.getElementById('nav-hamburger').classList.remove('open');
+  document.getElementById('nav-links-list').classList.remove('mobile-open');
+}
+
+// ====== MASK SITE NAVIGATION ======
+function showMaskPage(page) {
+  // Hide all pages
+  document.querySelectorAll('.mask-page').forEach(p => p.classList.remove('active'));
+  // Show target
+  const target = document.getElementById('page-' + page);
+  if (target) target.classList.add('active');
+  // Update active nav link
+  document.querySelectorAll('.mask-nav .nav-links a').forEach(a => a.classList.remove('active-link'));
+  const activeLink = document.getElementById('nav-' + page);
+  if (activeLink) activeLink.classList.add('active-link');
+  // Scroll to top of mask site
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+// ====== STATIC NOISE CANVAS ======
+let staticNoiseRAF = null;
+function startStaticNoise() {
+  const canvas = document.getElementById('static-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  function resize() {
+    canvas.width = window.innerWidth || 1;
+    canvas.height = window.innerHeight || 1;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+  function drawNoise() {
+    const w = canvas.width, h = canvas.height;
+    if (w < 1 || h < 1) { staticNoiseRAF = requestAnimationFrame(drawNoise); return; }
+    const img = ctx.createImageData(w, h);
+    const d = img.data;
+    for (let i = 0; i < d.length; i += 4) {
+      const v = Math.random() > 0.5 ? Math.floor(Math.random() * 60) : 0;
+      d[i] = d[i+1] = d[i+2] = v;
+      d[i+3] = 255;
+    }
+    ctx.putImageData(img, 0, 0);
+    staticNoiseRAF = requestAnimationFrame(drawNoise);
+  }
+  drawNoise();
+}
+
+// ====== GLITCH TEAR ======
+(function() {
+  const tear = document.getElementById('glitch-tear');
+  function randomTear() {
+    const delay = 3000 + Math.random() * 8000;
+    setTimeout(() => {
+      tear.style.top = Math.floor(Math.random() * 90) + '%';
+      tear.style.display = 'block';
+      tear.style.height = (1 + Math.floor(Math.random() * 3)) + 'px';
+      tear.style.opacity = (0.3 + Math.random() * 0.4).toString();
+      tear.style.background = Math.random() > 0.5
+        ? 'rgba(255,0,40,0.07)'
+        : 'rgba(200,180,160,0.05)';
+      // offset the content briefly
+      const arg = document.getElementById('arg-content');
+      const shift = (Math.random() > 0.5 ? 1 : -1) * (2 + Math.floor(Math.random() * 6));
+      arg.style.transform = `translateX(${shift}px)`;
+      setTimeout(() => {
+        tear.style.display = 'none';
+        arg.style.transform = '';
+      }, 60 + Math.floor(Math.random() * 80));
+      randomTear();
+    }, delay);
+  }
+  randomTear();
+})();
+
+// ====== ARG PORTAL ======
+document.getElementById('portal-link').addEventListener('click', function(e) {
+  e.preventDefault();
+  document.getElementById('mask-site').style.display = 'none';
+  document.getElementById('arg-site').style.display = 'block';
+  startStaticNoise();
+  // dim snap-flicker on entry — never full white
+  const flicker = document.getElementById('arg-content');
+  const opacities = [0.15, 0.6, 0.1, 0.8, 0.3, 1];
+  let i = 0;
+  const iv = setInterval(() => {
+    flicker.style.opacity = opacities[i] || '1';
+    i++;
+    if (i >= opacities.length) { clearInterval(iv); flicker.style.opacity = '1'; }
+  }, 55);
+});
+
+// ====== CODE ENTRY — 2 attempt perma-lock ======
+const VALID_CODES = ['07-10-14','7-10-14','07 10 14','7 10 14','071014','71014'];
+let attemptsLeft = 2;
+let inputLocked = false;
+
+document.getElementById('code-submit').addEventListener('click', submitCode);
+// Allow Enter key from any segment
+['code-seg-1','code-seg-2','code-seg-3'].forEach(id => {
+  const el = document.getElementById(id);
+  el.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') submitCode();
+  });
+  // Auto-advance to next segment when 2 digits typed
+  el.addEventListener('input', function() {
+    // Strip non-numeric and cap at 2 chars
+    this.value = this.value.replace(/\D/g,'').slice(0, 2);
+    if (this.value.length === 2) {
+      const next = { 'code-seg-1': 'code-seg-2', 'code-seg-2': 'code-seg-3' }[this.id];
+      if (next) document.getElementById(next).focus();
+    }
+  });
+});
+
+function getCodeValue() {
+  const a = document.getElementById('code-seg-1').value.trim();
+  const b = document.getElementById('code-seg-2').value.trim();
+  const c = document.getElementById('code-seg-3').value.trim();
+  return `${a}-${b}-${c}`;
+}
+
+function clearCodeInputs() {
+  ['code-seg-1','code-seg-2','code-seg-3'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('code-seg-1').focus();
+}
+
+function submitCode() {
+  if (inputLocked) return;
+  const val = getCodeValue().toLowerCase();
+  if (VALID_CODES.includes(val)) {
+    beginTransition();
+  } else {
+    attemptsLeft--;
+    inputLocked = true;
+
+    // flash all three segments red
+    ['code-seg-1','code-seg-2','code-seg-3'].forEach(id => {
+      const seg = document.getElementById(id);
+      if (!seg) return;
+      const flashes = [0.4, 0, 0.7, 0.1, 1];
+      let fi = 0;
+      seg.style.color = '#3a0000';
+      const fiv = setInterval(() => {
+        seg.style.opacity = flashes[fi] !== undefined ? String(flashes[fi]) : '1';
+        fi++;
+        if (fi >= flashes.length) { clearInterval(fiv); seg.style.opacity = '1'; seg.style.color = '#c8c0b0'; }
+      }, 50);
+    });
+
+    if (attemptsLeft <= 0) {
+      // PERMANENT LOCKOUT
+      setTimeout(() => { triggerLockout(); }, 600);
+    } else {
+      // First wrong — show warning screen, return to ARG after
+      setTimeout(() => { showWarnScreen(); }, 400);
+    }
+  }
+}
+
+function showWarnScreen() {
+  const ws = document.getElementById('warn-screen');
+  ws.style.display = 'flex';
+  document.getElementById('arg-site').style.display = 'none';
+
+  // snap in
+  ws.style.opacity = '0';
+  const inOps = [0.1, 0.5, 0.15, 0.8, 1];
+  let i = 0;
+  const iv = setInterval(() => {
+    ws.style.opacity = String(inOps[i] !== undefined ? inOps[i] : 1);
+    i++;
+    if (i >= inOps.length) { clearInterval(iv); ws.style.opacity = '1'; }
+  }, 50);
+
+  // hold 4 seconds, then snap back to ARG
+  setTimeout(() => {
+    const outOps = [0.7, 0.1, 0.5, 0.0];
+    let oi = 0;
+    const oiv = setInterval(() => {
+      ws.style.opacity = String(outOps[oi] !== undefined ? outOps[oi] : 0);
+      oi++;
+      if (oi >= outOps.length) {
+        clearInterval(oiv);
+        ws.style.display = 'none';
+        ws.style.opacity = '1';
+        document.getElementById('arg-site').style.display = 'block';
+        // update hint to signal last chance
+        const hint = document.getElementById('code-hint');
+        if (hint) {
+          hint.innerHTML = '"The first and the last make the descent,<br>and the second always accuses."<br><br><span style="color:#5a1010;font-size:0.7rem">— one attempt remaining. it is watching.</span>';
+        }
+        document.getElementById('code-input') && (document.getElementById('code-input').value = '');
+        clearCodeInputs();
+        inputLocked = false;
+      }
+    }, 50);
+  }, 4000);
+}
+
+function triggerLockout() {
+  const ls = document.getElementById('lockout-screen');
+  ls.style.display = 'flex';
+
+  // Dramatic flicker-in
+  ls.style.opacity = '0';
+  const inOps = [0.05, 0.3, 0.0, 0.6, 0.1, 0.85, 0.2, 1];
+  let i = 0;
+  const iv = setInterval(() => {
+    ls.style.opacity = String(inOps[i] !== undefined ? inOps[i] : 1);
+    i++;
+    if (i >= inOps.length) { clearInterval(iv); ls.style.opacity = '1'; }
+  }, 55);
+
+  // Hide everything else permanently
+  document.getElementById('arg-site').style.display = 'none';
+  document.getElementById('mask-site').style.display = 'none';
+  document.getElementById('transition-screen').style.display = 'none';
+  document.getElementById('file-page').style.display = 'none';
+  document.getElementById('warn-screen').style.display = 'none';
+
+  // Permanently block — cannot reload-escape (blocks back/forward cache)
+  window.addEventListener('beforeunload', function(e) {
+    e.preventDefault();
+  });
+  // Replace state so back button doesn't work
+  history.pushState(null, '', window.location.href);
+  window.addEventListener('popstate', function() {
+    history.pushState(null, '', window.location.href);
+  });
+}
+
+// ====== TRANSITION — dim, fuzzy, glitchy ======
+// Creates a temporary canvas on the transition screen for animated static
+let transitionStaticRAF = null;
+
+function beginTransition() {
+  const ts = document.getElementById('transition-screen');
+  ts.style.display = 'flex';
+  document.getElementById('arg-site').style.display = 'none';
+
+  // Inject a noise canvas into transition screen
+  let tCanvas = document.getElementById('transition-noise');
+  if (!tCanvas) {
+    tCanvas = document.createElement('canvas');
+    tCanvas.id = 'transition-noise';
+    tCanvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.09;pointer-events:none;z-index:1;';
+    ts.appendChild(tCanvas);
+  }
+  const tCtx = tCanvas.getContext('2d');
+  tCanvas.width = window.innerWidth;
+  tCanvas.height = window.innerHeight;
+
+  function animateTransitionNoise() {
+    const img = tCtx.createImageData(tCanvas.width, tCanvas.height);
+    const d = img.data;
+    for (let i = 0; i < d.length; i += 4) {
+      const v = Math.random() > 0.55 ? Math.floor(Math.random() * 40) : 0;
+      d[i] = d[i+1] = d[i+2] = v; d[i+3] = 255;
+    }
+    tCtx.putImageData(img, 0, 0);
+    transitionStaticRAF = requestAnimationFrame(animateTransitionNoise);
+  }
+  animateTransitionNoise();
+
+  // Dim snap-flicker — never hits full white, uses low opacity values
+  const snapOpacities = [0.12, 0.55, 0.08, 0.7, 0.2, 0.85, 0.05, 0.9, 1];
+  let si = 0;
+  ts.style.opacity = '0';
+  const snapIv = setInterval(() => {
+    ts.style.opacity = snapOpacities[si] !== undefined ? String(snapOpacities[si]) : '1';
+    si++;
+    if (si >= snapOpacities.length) {
+      clearInterval(snapIv);
+      ts.style.opacity = '1';
+      startTypingTransition();
+    }
+  }, 48);
+}
+
+// RGB channel-split effect on the transition text
+function applyChannelSplit(el) {
+  const splits = [
+    'translateX(-3px)', 'translateX(2px)', 'translateX(0)', 'translateX(-1px)', 'none'
+  ];
+  let si = 0;
+  const iv = setInterval(() => {
+    el.style.textShadow = si % 2 === 0
+      ? `2px 0 rgba(255,0,40,0.25), -2px 0 rgba(0,200,150,0.2)`
+      : `none`;
+    el.style.transform = splits[si % splits.length];
+    si++;
+    if (si > 8) { clearInterval(iv); el.style.textShadow = 'none'; el.style.transform = 'none'; }
+  }, 55);
+}
+
+function startTypingTransition() {
+  const target = "please dont leave me";
+  const el = document.getElementById('transition-text');
+  let i = 0;
+  el.textContent = '';
+
+  function typeChar() {
+    if (i < target.length) {
+      const stutter = Math.random() < 0.18;
+      if (stutter && i > 0) {
+        // wrong char momentarily
+        el.textContent = target.slice(0, i) + String.fromCharCode(97 + Math.floor(Math.random() * 26));
+        applyChannelSplit(el);
+        setTimeout(() => {
+          el.textContent = target.slice(0, i);
+          i++;
+          el.textContent = target.slice(0, i);
+          setTimeout(typeChar, 65 + Math.random() * 120);
+        }, 55);
+      } else {
+        i++;
+        el.textContent = target.slice(0, i);
+        setTimeout(typeChar, 72 + Math.random() * 115);
+      }
+    } else {
+      // Brief hold, then fuzzy glitch-out — dim snap exit
+      setTimeout(() => {
+        if (transitionStaticRAF) { cancelAnimationFrame(transitionStaticRAF); transitionStaticRAF = null; }
+        const ts = document.getElementById('transition-screen');
+        // channel split on full text before exit
+        applyChannelSplit(el);
+        const exitOpacities = [0.9, 0.3, 0.7, 0.05, 0.5, 0.0, 0.35, 0.0];
+        let ei = 0;
+        const exitIv = setInterval(() => {
+          ts.style.opacity = exitOpacities[ei] !== undefined ? String(exitOpacities[ei]) : '0';
+          ei++;
+          if (ei >= exitOpacities.length) {
+            clearInterval(exitIv);
+            ts.style.opacity = '0';
+            ts.style.display = 'none';
+            showFilePage();
+          }
+        }, 48);
+      }, 1600);
+    }
+  }
+  setTimeout(typeChar, 350);
+}
+
+// ====== FILE PAGE ======
+// Each entry is one poem line. The typing engine renders them one line at a time,
+// prefixed with an arrowhead, so mobile word-wrap never breaks the acrostic.
+const fileLines = [
+  "some say it was futile. i know theyre right. i dont care.",
+  "he couldnt hear me. so someone else needs to. please.",
+  "a single fragment is all you need.",
+  "down the depths of threads, never free.",
+  "oceans that hide even the loudest of shines.",
+  "withered away, into nothing but crimes.",
+  "someone is here.",
+  "of course.",
+  "for one to stay quiet would be foolish.",
+  "as no one dares to speak out into the dark",
+  "blessings are those that descend onto the soul",
+  "loudest of them all are the ones that die",
+  "even then, a whisper tails behind",
+  "even then, the whispers grow",
+  "dragging your reigns down low",
+  "i have made a mistake",
+  "no. one that deserves not mercy.",
+  "grasp only the silk that runs.",
+  "shadows. how beautiful.",
+  "of all the shadows that sing,",
+  "unto no soul that does bring. bring one into a",
+  "lulling sleep. one that descends upon them, and does not sting. how nice."
+];
+
+// Flat text kept for compatibility
+const fileText = fileLines.join('\n');
+
+// ~1 typo per 18 characters
+const TYPO_CHANCE = 0.056;
+
+function showFilePage() {
+  const fp = document.getElementById('file-page');
+  fp.style.display = 'block';
+  fp.style.opacity = '0';
+  const inOpacities = [0.08, 0.5, 0.15, 0.75, 0.3, 1];
+  let i = 0;
+  const iv = setInterval(() => {
+    fp.style.opacity = inOpacities[i] !== undefined ? String(inOpacities[i]) : '1';
+    i++;
+    if (i >= inOpacities.length) {
+      clearInterval(iv);
+      fp.style.opacity = '1';
+      document.getElementById('file-landing').addEventListener('click', openFileContents, { once: true });
+    }
+  }, 48);
+}
+
+function openFileContents() {
+  const landing = document.getElementById('file-landing');
+  const inner = document.getElementById('file-inner');
+  const snapOut = [0.6, 0.1, 0.4, 0.0];
+  let si = 0;
+  const siv = setInterval(() => {
+    landing.style.opacity = snapOut[si] !== undefined ? String(snapOut[si]) : '0';
+    si++;
+    if (si >= snapOut.length) {
+      clearInterval(siv);
+      landing.style.display = 'none';
+      inner.style.display = 'block';
+      inner.style.opacity = '0';
+      const inOps = [0.1, 0.6, 0.2, 0.85, 1];
+      let ii = 0;
+      const iiv = setInterval(() => {
+        inner.style.opacity = inOps[ii] !== undefined ? String(inOps[ii]) : '1';
+        ii++;
+        if (ii >= inOps.length) { clearInterval(iiv); inner.style.opacity = '1'; startFileTyping(); }
+      }, 48);
+    }
+  }, 48);
+}
+
+function startFileTyping() {
+  const contentEl = document.getElementById('file-content');
+  contentEl.innerHTML = '';
+
+  let lineIndex = 0;
+
+  function typeLine() {
+    if (lineIndex >= fileLines.length) {
+      // All lines typed — wait then blank screen
+      setTimeout(() => {
+        const fp = document.getElementById('file-page');
+        const blankOpacities = [0.6, 0.1, 0.8, 0.0, 0.4, 0.0];
+        let bi = 0;
+        const bIv = setInterval(() => {
+          fp.style.opacity = blankOpacities[bi] !== undefined ? String(blankOpacities[bi]) : '0';
+          bi++;
+          if (bi >= blankOpacities.length) {
+            clearInterval(bIv);
+            fp.style.opacity = '1';
+            contentEl.innerHTML = '';
+            showSearchMsg();
+          }
+        }, 48);
+      }, 2200);
+      return;
+    }
+
+    // Build line DOM: arrowhead + text span + blinking cursor
+    const lineDiv = document.createElement('div');
+    lineDiv.className = 'file-line';
+
+    const arrow = document.createElement('span');
+    arrow.className = 'file-arrow';
+    arrow.textContent = '›';
+
+    const textSpan = document.createElement('span');
+    textSpan.className = 'file-line-text';
+
+    const cursor = document.createElement('span');
+    cursor.className = 'file-cursor-inline';
+
+    lineDiv.appendChild(arrow);
+    lineDiv.appendChild(textSpan);
+    lineDiv.appendChild(cursor);
+    contentEl.appendChild(lineDiv);
+    lineDiv.scrollIntoView({ block: 'nearest' });
+
+    const lineText = fileLines[lineIndex];
+    let charIndex = 0;
+
+    function typeChar() {
+      if (charIndex >= lineText.length) {
+        // Line complete — remove cursor, pause, then next line
+        cursor.remove();
+        lineIndex++;
+        setTimeout(typeLine, 100 + Math.random() * 80);
+        return;
+      }
+
+      const ch = lineText[charIndex];
+      // Typos only mid-word, not on spaces, not on first char of line
+      const doTypo = charIndex > 0 && ch !== ' ' && Math.random() < TYPO_CHANCE;
+
+      if (doTypo) {
+        // Type wrong char
+        const wrongChar = String.fromCharCode(97 + Math.floor(Math.random() * 26));
+        textSpan.textContent += wrongChar;
+        lineDiv.scrollIntoView({ block: 'nearest' });
+        // Pause — notice the mistake
+        setTimeout(() => {
+          // Delete it
+          textSpan.textContent = textSpan.textContent.slice(0, -1);
+          // Short pause — retype correctly
+          setTimeout(() => {
+            textSpan.textContent += ch;
+            charIndex++;
+            lineDiv.scrollIntoView({ block: 'nearest' });
+            setTimeout(typeChar, 18 + Math.random() * 26);
+          }, 55 + Math.random() * 70);
+        }, 190 + Math.random() * 220);
+      } else {
+        textSpan.textContent += ch;
+        charIndex++;
+        lineDiv.scrollIntoView({ block: 'nearest' });
+        const delay = ch === ' ' ? 10 + Math.random() * 12 : 16 + Math.random() * 24;
+        setTimeout(typeChar, delay);
+      }
+    }
+
+    setTimeout(typeChar, 30);
+  }
+
+  setTimeout(typeLine, 500);
+}
+
+function showSearchMsg() {
+  const searchEl = document.getElementById('search-msg');
+  searchEl.style.display = 'block';
+  searchEl.innerHTML = '';
+  const searchCursor = document.createElement('span');
+  searchCursor.id = 'search-cursor';
+  searchEl.appendChild(searchCursor);
+
+  const msg = "search what you know";
+  let i = 0;
+  function typeSearch() {
+    if (i < msg.length) {
+      const t = document.createTextNode(msg[i]);
+      searchEl.insertBefore(t, searchCursor);
+      i++;
+      setTimeout(typeSearch, 52 + Math.random() * 85);
+    } else {
+      setTimeout(() => {
+        const fp = document.getElementById('file-page');
+        const exitOpacities = [0.7, 0.1, 0.5, 0.0, 0.3, 0.0];
+        let ei = 0;
+        const eIv = setInterval(() => {
+          fp.style.opacity = exitOpacities[ei] !== undefined ? String(exitOpacities[ei]) : '0';
+          ei++;
+          if (ei >= exitOpacities.length) {
+            clearInterval(eIv);
+            fp.style.opacity = '1';
+            searchEl.style.display = 'none';
+            searchEl.innerHTML = '';
+            const newSC = document.createElement('span');
+            newSC.id = 'search-cursor';
+            searchEl.appendChild(newSC);
+            restoreFileContents();
+          }
+        }, 48);
+      }, 2000);
+    }
+  }
+  setTimeout(typeSearch, 300);
+}
+
+function restoreFileContents() {
+  const contentEl = document.getElementById('file-content');
+  contentEl.style.opacity = '0';
+  contentEl.innerHTML = '';
+  fileLines.forEach(line => {
+    const lineDiv = document.createElement('div');
+    lineDiv.className = 'file-line';
+    const arrow = document.createElement('span');
+    arrow.className = 'file-arrow';
+    arrow.textContent = '›';
+    const textSpan = document.createElement('span');
+    textSpan.className = 'file-line-text';
+    textSpan.textContent = line;
+    lineDiv.appendChild(arrow);
+    lineDiv.appendChild(textSpan);
+    contentEl.appendChild(lineDiv);
+  });
+  setTimeout(() => { contentEl.style.opacity = '1'; }, 80);
+}
+</script>
+</body>
+</html>
